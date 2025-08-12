@@ -1,0 +1,9 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* petites bases */
+@layer base{
+  html{ @apply scroll-smooth;}
+  body{ @apply bg-bg text-text;}
+}
