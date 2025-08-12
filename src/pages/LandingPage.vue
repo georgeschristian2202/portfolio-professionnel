@@ -1,8 +1,11 @@
 <script setup>
+import { ref } from 'vue'
 import { onMounted } from 'vue'
 import Typed from 'typed.js'
 import ScrollReveal from 'scrollreveal'
 import { useRouter } from 'vue-router'
+import emailjs from '@emailjs/browser'
+
 
 const router = useRouter()
 
@@ -22,6 +25,54 @@ onMounted(() => {
   sr.reveal('.sr-right', { origin:'right' })
 
 })
+
+
+// champs du formulaire
+const form = ref({ name: '', email: '', message: '' })
+
+// états UI
+const sending = ref(false)
+const success = ref(false)
+const errorMsg = ref('')
+
+// ⚙️ IDs EmailJS (mets-les dans ton .env si possible)
+const SERVICE_ID  = import.meta.env.VITE_EMAILJS_SERVICE_ID  ?? 'service_xhno7uf'
+const TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID ?? 'template_rq4fagd'
+const PUBLIC_KEY  = import.meta.env.VITE_EMAILJS_PUBLIC_KEY  ?? 'vMLIMZTnKhBXZA88u'
+
+// petite validation d'email
+const emailOk = (v) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v || '')
+
+const onSubmit = async () => {
+  errorMsg.value = ''
+  if (!form.value.name || !form.value.email || !form.value.message) {
+    errorMsg.value = 'Veuillez remplir tous les champs.'
+    return
+  }
+  if (!emailOk(form.value.email)) {
+    errorMsg.value = "L'email saisi n'est pas valide."
+    return
+  }
+
+  sending.value = true
+  try {
+    // mappe les variables sur celles de ton template EmailJS
+    const params = {
+      from_name: form.value.name,
+      reply_to:  form.value.email,
+      message:   form.value.message,
+      subject:   'Contact Portfolio' // adapte si tu as un champ "sujet"
+    }
+    await emailjs.send(SERVICE_ID, TEMPLATE_ID, params, { publicKey: PUBLIC_KEY })
+    success.value = true
+    form.value = { name: '', email: '', message: '' }
+  } catch (err) {
+    console.error(err)
+    errorMsg.value = "L'envoi a échoué. Réessayez plus tard."
+  } finally {
+    sending.value = false
+  }
+}
 </script>
 
 <template>
@@ -49,16 +100,6 @@ onMounted(() => {
     </div>
     </div>
   </section>
-  <!-- Bouton Télécharger -->
-  <a
-    href="/cv/CV_2025-07-16_Georges_RAPONTCHOMBO.pdf"
-    download
-    class="inline-flex items-center gap-2 rounded-full bg-sky-600 hover:bg-sky-500 text-white px-4 py-2 shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-sky-500"
-    aria-label="Télécharger le CV en PDF"
-  >
-    <i class="bx bx-download text-xl"></i>
-
-  </a>
   <!-- ABOUT -->
   <section id="about" class="bg-bg2 text-text py-16">
     <div class="container grid lg:grid-cols-2 gap-10 items-center">
@@ -110,31 +151,46 @@ onMounted(() => {
   <!-- SERVICES -->
   <section id="services" class="py-16">
     <div class="container">
-    <h2 class="text-4xl font-bold text-center mb-12">Our <span class="text-main">Services</span></h2>
+      <h2 class="text-4xl font-bold text-center mb-12">
+        Nos <span class="text-main">Services</span>
+      </h2>
+
       <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-      <article class="text-center rounded-2xl border-4 border-bg bg-bg2 p-8 transition hover:scale-[1.02] hover:border-main">
-        <i class='bx bx-code-alt text-main text-7xl'></i>
-        <h3 class="mt-4 text-2xl font-semibold">Web Development</h3>
-        <p class="mt-3 text-white/80">Lorem ipsum dolor sit amet…</p>
-        <a href="#" class="inline-block mt-4 px-5 py-2 rounded-full bg-main text-bg2 font-semibold">Read More</a>
-      </article>
 
-      <article class="text-center rounded-2xl border-4 border-bg bg-bg2 p-8 transition hover:scale-[1.02] hover:border-main">
-        <i class='bx bxs-paint text-main text-7xl'></i>
-        <h3 class="mt-4 text-2xl font-semibold">Graphic Design</h3>
-        <p class="mt-3 text-white/80">Lorem ipsum dolor sit amet…</p>
-        <a href="#" class="inline-block mt-4 px-5 py-2 rounded-full bg-main text-bg2 font-semibold">Read More</a>
-      </article>
+        <!-- Service 1 -->
+        <article class="text-center rounded-2xl border-4 border-bg bg-bg2 p-8 transition hover:scale-[1.02] hover:border-main">
+          <i class='bx bx-code-alt text-main text-7xl'></i>
+          <h3 class="mt-4 text-2xl font-semibold">Sites Vitrine</h3>
+          <p class="mt-3 text-white/80">
+            Conception de sites web modernes, responsives et optimisés pour mettre en valeur votre activité.
+            Idéal pour présenter vos services, votre entreprise ou vos produits de manière professionnelle.
+          </p>
+        </article>
 
-      <article class="text-center rounded-2xl border-4 border-bg bg-bg2 p-8 transition hover:scale-[1.02] hover:border-main">
-        <i class='bx bx-bar-chart-alt text-main text-7xl'></i>
-        <h3 class="mt-4 text-2xl font-semibold">Digital Marketing</h3>
-        <p class="mt-3 text-white/80">Lorem ipsum dolor sit amet…</p>
-        <a href="#" class="inline-block mt-4 px-5 py-2 rounded-full bg-main text-bg2 font-semibold">Read More</a>
-      </article>
-    </div>
+        <!-- Service 2 -->
+        <article class="text-center rounded-2xl border-4 border-bg bg-bg2 p-8 transition hover:scale-[1.02] hover:border-main">
+          <i class='bx bx-devices text-main text-7xl'></i>
+          <h3 class="mt-4 text-2xl font-semibold">Applications Web sur Mesure</h3>
+          <p class="mt-3 text-white/80">
+            Développement d'applications web interactives et performantes adaptées à vos besoins spécifiques.
+            Solutions personnalisées avec des fonctionnalités avancées pour booster votre productivité.
+          </p>
+        </article>
+
+        <!-- Service 3 -->
+        <article class="text-center rounded-2xl border-4 border-bg bg-bg2 p-8 transition hover:scale-[1.02] hover:border-main">
+          <i class='bx bxs-paint text-main text-7xl'></i>
+          <h3 class="mt-4 text-2xl font-semibold">UI/UX Design & Maquettage</h3>
+          <p class="mt-3 text-white/80">
+            Création de maquettes modernes et ergonomiques pour vos projets web.
+            Un design intuitif et esthétique pour offrir une expérience utilisateur optimale.
+          </p>
+        </article>
+
+      </div>
     </div>
   </section>
+
 
   <!-- PORTFOLIO -->
   <section id="portfolio" class="bg-bg2">
@@ -156,22 +212,132 @@ onMounted(() => {
   </section>
 
   <!-- CONTACT -->
-  <section id="contact" class="container mx-auto px-4 py-16">
-    <h2 class="text-4xl font-bold text-center mb-10">Contact <span class="text-main">Me!</span></h2>
-    <form class="max-w-3xl mx-auto text-center space-y-4 sr-bottom" @submit.prevent>
-      <div class="flex gap-4 flex-col sm:flex-row">
-        <input class="flex-1 rounded-lg bg-bg2 px-4 py-3" placeholder="Full name" />
-        <input type="email" class="flex-1 rounded-lg bg-bg2 px-4 py-3" placeholder="Email Address" />
-      </div>
-      <div class="flex gap-4 flex-col sm:flex-row">
-        <input type="number" class="flex-1 rounded-lg bg-bg2 px-4 py-3" placeholder="Mobile Number" />
-        <input class="flex-1 rounded-lg bg-bg2 px-4 py-3" placeholder="Email Subject" />
-      </div>
-      <textarea rows="6" class="w-full rounded-lg bg-bg2 px-4 py-3" placeholder="Your Message"></textarea>
-      <button class="mt-2 px-6 py-2 rounded-full bg-main text-bg2 font-semibold">Send Message</button>
-    </form>
-  </section>
+  <section id="contact" class="py-16">
+    <div class="container">
+      <h2 class="text-4xl font-bold text-center mb-10">
+        Contact <span class="text-main">Nous</span>
+      </h2>
 
+      <div class="grid lg:grid-cols-2 gap-8">
+        <!-- =================== GAUCHE : Coordonnées =================== -->
+        <div class="space-y-8">
+          <h3 class="text-2xl font-semibold">Nos Coordonnées</h3>
+
+          <!-- Email -->
+          <div class="flex items-start gap-4">
+            <div class="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center">
+              <i class="bx bx-envelope text-2xl text-main"></i>
+            </div>
+            <div>
+              <p class="font-semibold">Email</p>
+              <p class="text-white/80">devgroupentreprise@gmail.com</p>
+              <a href="mailto:devgroupentreprise@gmail.com" class="text-main text-sm">
+                Envoyez‑nous un email
+              </a>
+            </div>
+          </div>
+
+          <!-- Téléphone -->
+          <div class="flex items-start gap-4">
+            <div class="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center">
+              <i class="bx bx-phone text-2xl text-main"></i>
+            </div>
+            <div>
+              <p class="font-semibold">Téléphone</p>
+              <p class="text-white/80">+241 074 60 43 27</p>
+              <a href="tel:+241074604327" class="text-main text-sm">
+                Appelez‑nous
+              </a>
+            </div>
+          </div>
+
+          <!-- Adresse -->
+          <div class="flex items-start gap-4">
+            <div class="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center">
+              <i class="bx bx-map text-2xl text-main"></i>
+            </div>
+            <div>
+              <p class="font-semibold">Adresse</p>
+              <p class="text-white/80">Avenue Denis RAPONTCHOMBO</p>
+              <a
+                class="text-main text-sm"
+                href="https://www.google.com/maps/search/?api=1&query=Avenue%20Denis%20RAPONTCHOMBO"
+                target="_blank"
+                rel="noopener"
+              >
+                Voir sur la carte
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- =================== DROITE : Formulaire =================== -->
+        <div class="rounded-2xl border border-white/10 p-6">
+          <h3 class="text-xl font-semibold mb-4">Envoyez‑nous un message</h3>
+
+          <!-- Succès -->
+          <div
+            v-if="success"
+            class="rounded-lg bg-green-900/60 text-green-200 px-4 py-3"
+          >
+            <p class="font-semibold">Message envoyé avec succès !</p>
+            <p class="text-sm opacity-90">
+              Nous vous répondrons dans les plus brefs délais.
+            </p>
+          </div>
+
+          <!-- Form -->
+          <form v-else @submit.prevent="onSubmit" class="space-y-4" aria-live="polite">
+            <div>
+              <label class="block text-sm mb-1">Nom complet</label>
+              <input
+                v-model.trim="form.name"
+                :disabled="sending"
+                class="w-full rounded-lg bg-bg2 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-main"
+                placeholder="Votre nom"
+              />
+            </div>
+
+            <div>
+              <label class="block text-sm mb-1">Email</label>
+              <input
+                v-model.trim="form.email"
+                type="email"
+                :disabled="sending"
+                class="w-full rounded-lg bg-bg2 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-main"
+                placeholder="votre.email@exemple.com"
+              />
+            </div>
+
+            <div>
+              <label class="block text-sm mb-1">Message</label>
+              <textarea
+                v-model.trim="form.message"
+                rows="6"
+                :disabled="sending"
+                class="w-full rounded-lg bg-bg2 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-main"
+                placeholder="Comment pouvons‑nous vous aider ?"
+              ></textarea>
+            </div>
+
+            <p v-if="errorMsg" class="text-red-400 text-sm">{{ errorMsg }}</p>
+
+            <button
+              type="submit"
+              :disabled="sending"
+              class="w-full inline-flex items-center justify-center gap-2 rounded-lg bg-main text-bg2 font-semibold px-4 py-3 disabled:opacity-60"
+            >
+              <template v-if="!sending">Envoyer le message</template>
+              <template v-else>
+                <span class="h-5 w-5 border-2 border-bg2/50 border-t-transparent rounded-full animate-spin"></span>
+                Envoi en cours…
+              </template>
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
 
 </template>
 
