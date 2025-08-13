@@ -27,24 +27,16 @@ onMounted(() => {
 })
 
 
-// champs du formulaire
-const form = ref({ name: '', email: '', message: '' })
-
-// états UI
+const form = ref({ name: '', email: '', message: '', honey: '' })
 const sending = ref(false)
 const success = ref(false)
 const errorMsg = ref('')
 
-// ⚙️ IDs EmailJS (mets-les dans ton .env si possible)
-const SERVICE_ID  = import.meta.env.VITE_EMAILJS_SERVICE_ID  ?? 'service_xhno7uf'
-const TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID ?? 'template_rq4fagd'
-const PUBLIC_KEY  = import.meta.env.VITE_EMAILJS_PUBLIC_KEY  ?? 'vMLIMZTnKhBXZA88u'
-
-// petite validation d'email
 const emailOk = (v) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v || '')
 
 const onSubmit = async () => {
   errorMsg.value = ''
+  if (form.value.honey) return
   if (!form.value.name || !form.value.email || !form.value.message) {
     errorMsg.value = 'Veuillez remplir tous les champs.'
     return
@@ -56,18 +48,22 @@ const onSubmit = async () => {
 
   sending.value = true
   try {
-    // mappe les variables sur celles de ton template EmailJS
-    const params = {
-      from_name: form.value.name,
-      reply_to:  form.value.email,
-      message:   form.value.message,
-      subject:   'Contact Portfolio' // adapte si tu as un champ "sujet"
-    }
-    await emailjs.send(SERVICE_ID, TEMPLATE_ID, params, { publicKey: PUBLIC_KEY })
+    const r = await fetch('/api/send-email', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        name: form.value.name,
+        email: form.value.email,
+        message: form.value.message,
+        subject: 'Contact Portfolio'
+      })
+    })
+    if (!r.ok) throw new Error(await r.text())
     success.value = true
-    form.value = { name: '', email: '', message: '' }
-  } catch (err) {
-    console.error(err)
+    form.value = { name: '', email: '', message: '', honey: '' }
+    setTimeout(() => { success.value = false }, 5000)
+  } catch (e) {
+    console.error(e)
     errorMsg.value = "L'envoi a échoué. Réessayez plus tard."
   } finally {
     sending.value = false
