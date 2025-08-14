@@ -46,6 +46,27 @@ const onSubmit = async () => {
     return
   }
 
+  // ✅ Vérif serveur (MX + jetables)
+  try {
+    const vr = await fetch(`/api/validate-email?email=${encodeURIComponent(form.value.email)}`)
+    const vd = await vr.json()
+    if (!vd.ok) {
+      const r = vd.reason || 'invalid_email'
+      const msg =
+        r === 'disposable_domain' ? "Adresse jetable non acceptée." :
+          r === 'no_mx'            ? "Le domaine n'accepte pas d’emails (MX manquant)." :
+            r === 'bad_syntax'       ? "Format d’email invalide." :
+              "Adresse e-mail invalide."
+      errorMsg.value = msg
+      return
+    }
+  } catch {
+    // En cas d’erreur réseau DNS, on peut laisser passer ou bloquer :
+    errorMsg.value = "Impossible de vérifier l'email pour le moment. Réessayez."
+    return
+  }
+
+  // ✉️ Envoi si tout est OK
   sending.value = true
   try {
     const r = await fetch('/api/send-email', {
@@ -267,6 +288,7 @@ const onSubmit = async () => {
           </div>
         </div>
 
+        <!-- =================== DROITE : Formulaire =================== -->
         <!-- =================== DROITE : Formulaire =================== -->
         <div class="rounded-2xl border border-white/10 p-6">
           <h3 class="text-xl font-semibold mb-4">Envoyez‑nous un message</h3>
