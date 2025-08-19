@@ -1,9 +1,12 @@
 <script setup>
+
 defineOptions({ name: 'HeaderPage' })
 
 import { ref, onMounted, onBeforeUnmount, computed, nextTick } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useScrollSpy } from '@/composables/useScrollSpy'
+import ThemeToggle from '@/components/ThemeToggle.vue'
+
 
 // --- liens : sections (hash) vs route ---
 const links = [
@@ -63,40 +66,50 @@ function linkClass(link) {
 <template>
   <header :class="['fixed inset-x-0 top-0 z-50 border-b transition',
                    scrolled ? 'bg-bg/80 backdrop-blur border-white/10' : 'bg-bg border-transparent']">
-    <nav class="container h-16 flex items-center justify-between">
-      <a class="text-2xl font-semibold" href="/" @click.prevent="go({ hash:'#home' })"></a>
+    <nav
+      class="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8
+         flex items-center justify-between py-3"
+    >
+      <!-- (optionnel) logo/nom -->
+      <a class="text-2xl font-semibold" href="/" @click.prevent="go({ hash:'#home' })"> </a>
 
-      <!-- Desktop -->
+      <!-- Desktop links -->
       <ul class="hidden md:flex items-center gap-6">
         <li v-for="l in links" :key="l.label">
           <RouterLink
             v-if="l.route"
             :to="l.route"
-            class="hover:text-main"
+            class="hover:text-main transition"
             :class="linkClass(l)"
           >{{ l.label }}</RouterLink>
 
           <a
             v-else-if="l.hash"
             href="#"
-            class="hover:text-main"
+            class="hover:text-main transition"
             :class="linkClass(l)"
             @click.prevent="go(l)"
           >{{ l.label }}</a>
 
-          <a
-            v-else-if="l.external"
-            :href="l.href"
-            class="hover:text-main"
-          >{{ l.label }}</a>
+          <a v-else-if="l.external" :href="l.href" class="hover:text-main transition">
+            {{ l.label }}
+          </a>
         </li>
       </ul>
 
-      <!-- Burger -->
-      <button class="md:hidden text-3xl" @click="open=!open" aria-label="Menu">
-        <i :class="['bx', open ? 'bx-x' : 'bx-menu']"></i>
-      </button>
+      <!-- Actions (toggle + burger) -->
+      <div class="flex items-center gap-3">
+        <!-- marge à gauche pour décoller de la nav -->
+        <ThemeToggle class="ml-1" />
+        <button class="md:hidden text-3xl" @click="open=!open" aria-label="Menu">
+          <i :class="['bx', open ? 'bx-x' : 'bx-menu']"></i>
+        </button>
+      </div>
     </nav>
+
+
+
+
 
     <!-- Mobile -->
     <div v-if="open" class="md:hidden border-t border-white/10">

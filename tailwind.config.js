@@ -12,6 +12,8 @@ export default {
         '2xl': '1280px' // verrouille à 1280 pour avoir le même rendu que ta 1ère image
       }
     },
+    darkMode: 'class',
+
     extend: {
       colors:{ bg:"#1f242d", bg2:"#323946", text:"#ffffff", main:"#00eeff" }
     }

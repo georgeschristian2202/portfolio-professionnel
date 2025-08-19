@@ -1,0 +1,30 @@
+/* src/assets/theme.css */
+/* Palette LIGHT (jour) */
+:root{
+  --bg:      #f8fafc;  /* fond global */
+  --bg2:     #ffffff;  /* cartes / surfaces */
+  --text:    #0f172a;  /* texte principal */
+  --border:  #e2e8f0;  /* bordures */
+  --main:    #0ea5e9;  /* couleur d’accent */
+}
+
+/* Palette DARK (nuit) – déjà ton look actuel */
+.dark{
+  --bg:      #0b1220;
+  --bg2:     #0f172a;
+  --text:    #e2e8f0;
+  --border:  #0b2540;
+  --main:    #0ea5e9;
+}
+
+/* Utilitaires mappés sur tes classes existantes */
+.bg-bg     { background-color: var(--bg); }
+.bg-bg2    { background-color: var(--bg2); }
+.text-text { color: var(--text); }
+.border-border { border-color: var(--border); }
+.text-main { color: var(--main); }
+.bg-main   { background-color: var(--main); }
+
+/* base par défaut (évite les textes invisibles) */
+html,body,#app{background:var(--bg);color:var(--text)}
+a{color:inherit}

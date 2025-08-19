@@ -4,7 +4,6 @@ import { onMounted } from 'vue'
 import Typed from 'typed.js'
 import ScrollReveal from 'scrollreveal'
 import { useRouter } from 'vue-router'
-import emailjs from '@emailjs/browser'
 
 
 const router = useRouter()
@@ -94,64 +93,159 @@ const onSubmit = async () => {
 
 <template>
   <!-- HOME -->
-  <section id="home" class="py-16">
-    <div class="container grid lg:grid-cols-2 gap-10 items-center">
+  <section id="home" class="py-12 sm:py-16">
+    <div class="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8
+              grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
 
-    <div class="sr-top">
-      <h3 class="text-4xl font-bold">Hello, It's Me</h3>
-      <h1 class="mt-2 text-7xl font-extrabold">Christian <br>Rapontchombo</h1>
-      <h3 class="mt-3 text-4xl font-extrabold">And I'm a <span class="font-extrabold text-main typed"></span></h3>
-      <p class="mt-4 text-white/80-4xl font-bold">Passionné par la création d’expériences digitales intuitives et impactantes.
-        <br>Du design d’interface au développement technique, je transforme les idées <br> en  solutions concrètes, alliant créativité, précision et sens de l’utilisateur.</p>
+      <div class="sr-top text-center lg:text-left">
+        <h3 class="text-2xl sm:text-3xl font-bold">hey !, It's Me</h3>
 
-      <div class="mt-6 flex gap-4">
-        <a href="#" class="w-10 h-10 inline-flex items-center justify-center rounded-full border border-main text-main hover:bg-main hover:text-bg2 transition"><i class='bx bxl-facebook'></i></a>
-        <a href="#" class="w-10 h-10 inline-flex items-center justify-center rounded-full border border-main text-main hover:bg-main hover:text-bg2 transition"><i class='bx bxl-twitter'></i></a>
-        <a href="#" class="w-10 h-10 inline-flex items-center justify-center rounded-full border border-main text-main hover:bg-main hover:text-bg2 transition"><i class='bx bxl-instagram-alt'></i></a>
-        <a href="#" class="w-10 h-10 inline-flex items-center justify-center rounded-full border border-main text-main hover:bg-main hover:text-bg2 transition"><i class='bx bxl-linkedin'></i></a>
+        <h1 class="mt-2 text-3xl sm:text-5xl md:text-6xl lg:text-7xl
+             font-extrabold leading-tight tracking-tight">
+          Georges <br class="hidden sm:block"> RAPONTCHOMBO
+        </h1>
+
+        <h3 class="mt-3 text-2xl sm:text-3xl font-extrabold">
+          And I'm a <span class="font-extrabold text-main typed"></span>
+        </h3>
+
+        <p class="mt-4 text-base sm:text-lg text-text opacity-80 max-w-prose mx-auto lg:mx-0 text-justify hyphens-auto">
+          Passionné par la création d’expériences digitales intuitives et impactantes.
+          Du design d’interface au développement technique, je transforme les idées en solutions concrètes,
+          alliant créativité, précision et sens de l’utilisateur.
+        </p>
+        <div class="mt-6 flex flex-wrap justify-center lg:justify-start gap-3 sm:gap-4">
+          <!-- Facebook -->
+          <a href="https://www.facebook.com/share/1CTtwvfYNd/"
+             aria-label="Facebook"
+             class="relative group w-10 h-10 inline-flex items-center justify-center rounded-full
+            border border-main text-main overflow-visible
+            transition duration-200 transform hover:-translate-y-0.5
+            group-hover:border-transparent group-hover:text-bg2">
+            <!-- remplissage -->
+            <span class="absolute inset-0 rounded-full bg-main opacity-0 scale-90
+                 transition duration-200 group-hover:opacity-100 group-hover:scale-100"></span>
+            <!-- glow near -->
+            <span class="pointer-events-none absolute -inset-1 rounded-full bg-main/60 blur-md
+                 opacity-0 transition duration-200 group-hover:opacity-100"></span>
+            <!-- glow wide -->
+            <span class="pointer-events-none absolute -inset-3 rounded-full bg-main/30 blur-xl
+                 opacity-0 transition duration-200 group-hover:opacity-100"></span>
+            <i class="bx bxl-facebook text-lg relative z-10"></i>
+          </a>
+
+          <!-- Twitter / X -->
+          <a href="https://x.com/Georges2kr"
+             aria-label="Twitter"
+             class="relative group w-10 h-10 inline-flex items-center justify-center rounded-full
+            border border-main text-main overflow-visible
+            transition duration-200 transform hover:-translate-y-0.5
+            group-hover:border-transparent group-hover:text-bg2">
+    <span class="absolute inset-0 rounded-full bg-main opacity-0 scale-90
+                 transition duration-200 group-hover:opacity-100 group-hover:scale-100"></span>
+            <span class="pointer-events-none absolute -inset-1 rounded-full bg-main/60 blur-md
+                 opacity-0 transition duration-200 group-hover:opacity-100"></span>
+            <span class="pointer-events-none absolute -inset-3 rounded-full bg-main/30 blur-xl
+                 opacity-0 transition duration-200 group-hover:opacity-100"></span>
+            <i class="bx bxl-twitter text-lg relative z-10"></i>
+          </a>
+
+
+          <!-- GitHub -->
+          <a href="https://github.com/RG-christian"
+             target="_blank" rel="noopener"
+             aria-label="GitHub"
+             class="relative group w-10 h-10 inline-flex items-center justify-center rounded-full
+          border border-main text-main overflow-visible
+          transition duration-200 transform hover:-translate-y-0.5
+          group-hover:border-transparent group-hover:text-bg2">
+            <!-- remplissage -->
+            <span class="absolute inset-0 rounded-full bg-main opacity-0 scale-90
+               transition duration-200 group-hover:opacity-100 group-hover:scale-100"></span>
+            <!-- glow near -->
+            <span class="pointer-events-none absolute -inset-1 rounded-full bg-main/60 blur-md
+               opacity-0 transition duration-200 group-hover:opacity-100"></span>
+            <!-- glow wide -->
+            <span class="pointer-events-none absolute -inset-3 rounded-full bg-main/30 blur-xl
+               opacity-0 transition duration-200 group-hover:opacity-100"></span>
+
+            <i class="bx bxl-github text-lg relative z-10"></i>
+          </a>
+
+          <!-- LinkedIn -->
+          <a href="https://www.linkedin.com/in/christianrapo/?originalSubdomain=ga"
+             aria-label="LinkedIn"
+             class="relative group w-10 h-10 inline-flex items-center justify-center rounded-full
+            border border-main text-main overflow-visible
+            transition duration-200 transform hover:-translate-y-0.5
+            group-hover:border-transparent group-hover:text-bg2">
+    <span class="absolute inset-0 rounded-full bg-main opacity-0 scale-90
+                 transition duration-200 group-hover:opacity-100 group-hover:scale-100"></span>
+            <span class="pointer-events-none absolute -inset-1 rounded-full bg-main/60 blur-md
+                 opacity-0 transition duration-200 group-hover:opacity-100"></span>
+            <span class="pointer-events-none absolute -inset-3 rounded-full bg-main/30 blur-xl
+                 opacity-0 transition duration-200 group-hover:opacity-100"></span>
+            <i class="bx bxl-linkedin text-lg relative z-10"></i>
+          </a>
+        </div>
+
+        <button
+          @click="goToCVPage"
+          class="mt-8 sm:mt-10 relative group inline-flex items-center justify-center px-6 py-2 rounded-full
+         bg-main text-bg2 font-semibold transition-transform duration-200
+         hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-main/40"
+        >
+          <span class="relative z-10">Download CV</span>
+
+          <!-- glow soft (réduit) -->
+          <span class="pointer-events-none absolute -inset-1 rounded-full bg-main/35 blur-md"></span>
+          <span class="pointer-events-none absolute -inset-2 rounded-full bg-main/20 blur-xl"></span>
+
+          <!-- glow hover -->
+          <span class="pointer-events-none absolute -inset-1 rounded-full bg-main/60 blur-lg
+               opacity-0 transition-opacity duration-200 group-hover:opacity-100"></span>
+          <span class="pointer-events-none absolute -inset-2 rounded-full bg-main/35 blur-2xl
+               opacity-0 transition-opacity duration-200 group-hover:opacity-100"></span>
+        </button>
+
+
       </div>
-      <button   @click="goToCVPage" class="inline-block mt-4 px-6 py-2 rounded-full bg-main text-bg2 font-semibold shadow hover:shadow-none" aria-label="Télécharger le CV en PDF">Télecharger CV</button>
-    </div>
-    <div class="sr-bottom flex justify-center">
-      <img src="/images/photo2.jpeg" class="w-[35vw] max-w-md rounded-2xl shadow animate-[float_4s_ease-in-out_infinite]" />
-    </div>
+      <div class="sr-bottom flex justify-center">
+        <img src="/images/image_2.png"
+             class="w-40 sm:w-56 md:w-72 lg:w-[35vw] max-w-full
+              rounded-2xl shadow animate-[float_4s_ease-in-out_infinite]" />
+      </div>
+
     </div>
   </section>
   <!-- ABOUT -->
-  <section id="about" class="bg-bg2 text-text py-16">
-    <div class="container grid lg:grid-cols-2 gap-10 items-center">
+  <section id="about" class="bg-bg2 text-text py-12 sm:py-16">
+    <div class="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8
+              grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
 
-      <!-- Photo avec overlay dégradé -->
-      <div class="relative">
-        <img src="/images/photocopie1.JPG" alt="Christian Rapontchombo" class="w-full rounded-lg">
-
-        <!-- Overlay sombre en bas de l'image -->
-        <div class="absolute inset-x-0 bottom-0 h-20 rounded-b-lg
-                  bg-gradient-to-t from-black/70 to-transparent"></div>
-
-        <!-- Nom + rôle par-dessus l'ombre -->
+    <!-- Photo avec overlay dégradé -->
+      <div class="relative max-w-md mx-auto">
+        <img src="/images/image_1.png" alt="Christian Rapontchombo" class="w-full rounded-lg">
+        <div class="absolute inset-x-0 bottom-0 h-20 rounded-b-lg bg-gradient-to-t from-black/70 to-transparent"></div>
         <div class="absolute bottom-4 left-4">
-          <h2 class="text-xl font-bold text-white">
-            Georges RAPONTCHOMBO
-          </h2>
-          <p class="text-sm text-gray-200">
-            Développeur Fullstack
-          </p>
+          <h2 class="text-lg sm:text-xl font-bold text-white">Georges RAPONTCHOMBO</h2>
+          <p class="text-xs sm:text-sm text-gray-200">Développeur Fullstack</p>
         </div>
       </div>
       <!-- Texte -->
-      <div>
-        <h2 class="text-4xl font-bold mb-4">À propos de <span class="text-main">Moi</span></h2>
-        <h3 class="text-main text-xl font-medium mb-4">Développeur Fullstack</h3>
-        <p class="mb-6 leading-relaxed text-white/80 font-bold">
-          Développeur fullstack avec 2 ans d'expérience, spécialisé dans la conception d’applications web modernes et évolutives.
-          J’aime relever les défis techniques <br>et proposer des solutions fiables, performantes et centrées sur l’utilisateur.
-          <br> Passionné par les technologies web et l’architecture logicielle, je m’investis <br> dans chaque projet avec rigueur et esprit d’équipe.
+      <div class="text-center lg:text-left mt-8 lg:mt-0">
+        <h2 class="text-3xl sm:text-4xl font-bold mb-4">À propos de <span class="text-main">Moi</span></h2>
+        <h3 class="text-main text-lg sm:text-xl font-medium mb-4">Développeur Fullstack</h3>
+
+        <p class="mb-6 text-base sm:text-lg leading-relaxed text-text opacity-80 max-w-prose mx-auto lg:mx-0 text-justify hyphens-auto">
+          Développeur fullstack avec 2 ans d'expérience, spécialisé dans la conception d’applications web
+          modernes et évolutives. J’aime relever les défis techniques et proposer des solutions fiables,
+          performantes et centrées sur l’utilisateur. Passionné par les technologies web et l’architecture
+          logicielle, je m’investis dans chaque projet avec rigueur et esprit d’équipe.
         </p>
 
-        <!-- Compétences -->
         <h4 class="text-lg font-semibold mb-3">Compétences :</h4>
-        <div class="flex flex-wrap gap-2">
+        <div class="flex flex-wrap justify-center lg:justify-start gap-2">
           <span class="bg-bg px-3 py-1 rounded-full text-sm">Vue.js</span>
           <span class="bg-bg px-3 py-1 rounded-full text-sm">Node.js</span>
           <span class="bg-bg px-3 py-1 rounded-full text-sm">PostgreSQL</span>
@@ -166,39 +260,38 @@ const onSubmit = async () => {
 
 
   <!-- SERVICES -->
-  <section id="services" class="py-16">
-    <div class="container">
-      <h2 class="text-4xl font-bold text-center mb-12">
-        Nos <span class="text-main">Services</span>
-      </h2>
+  <section id="services" class="py-12 sm:py-16">
+    <div class="container mx-auto max-w-7xl px-4 sm:px-6">
+      <h2 class="text-3xl sm:text-4xl font-bold text-center mb-8 sm:mb-12">Mes <span class="text-main">Services</span></h2>
 
-      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-
-        <!-- Service 1 -->
-        <article class="text-center rounded-2xl border-4 border-bg bg-bg2 p-8 transition hover:scale-[1.02] hover:border-main">
-          <i class='bx bx-code-alt text-main text-7xl'></i>
-          <h3 class="mt-4 text-2xl font-semibold">Sites Vitrine</h3>
-          <p class="mt-3 text-white/80">
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <article class="text-center rounded-2xl border-4 border-bg bg-bg2 p-6 sm:p-8 transition
+                      hover:scale-[1.02] hover:border-main">
+          <i class='bx bx-code-alt text-main text-5xl sm:text-6xl'></i>
+          <h3 class="mt-4 text-xl sm:text-2xl font-semibold">Sites Vitrine</h3>
+          <p class="mt-3 text-text opacity-80 text-sm sm:text-base text-justify hyphens-auto">
             Conception de sites web modernes, responsives et optimisés pour mettre en valeur votre activité.
             Idéal pour présenter vos services, votre entreprise ou vos produits de manière professionnelle.
           </p>
         </article>
 
         <!-- Service 2 -->
-        <article class="text-center rounded-2xl border-4 border-bg bg-bg2 p-8 transition hover:scale-[1.02] hover:border-main">
-          <i class='bx bx-devices text-main text-7xl'></i>
+        <article class="text-center rounded-2xl border-4 border-bg bg-bg2 p-6 sm:p-8 transition
+                      hover:scale-[1.02] hover:border-main">
+          <i class='bx bx-devices text-main text-5xl sm:text-6xl'></i>
           <h3 class="mt-4 text-2xl font-semibold">Applications Web sur Mesure</h3>
-          <p class="mt-3 text-white/80">
+          <p class="mt-3 text-text opacity-80  text-sm sm:text-base text-justify hyphens-auto">
             Développement d'applications web interactives et performantes adaptées à vos besoins spécifiques.
             Solutions personnalisées avec des fonctionnalités avancées pour booster votre productivité.
           </p>
         </article>
 
         <!-- Service 3 -->
-        <article class="text-center rounded-2xl border-4 border-bg bg-bg2 p-8 transition hover:scale-[1.02] hover:border-main">
-          <i class='bx bxs-paint text-main text-7xl'></i>
+        <article class="text-center rounded-2xl border-4 border-bg bg-bg2 p-6 sm:p-8 transition
+                      hover:scale-[1.02] hover:border-main">
+          <i class='bx bxs-paint text-main text-5xl sm:text-6xl'></i>
           <h3 class="mt-4 text-2xl font-semibold">UI/UX Design & Maquettage</h3>
-          <p class="mt-3 text-white/80">
+          <p class="mt-3 text-text opacity-80 text-sm sm:text-base text-justify hyphens-auto">
             Création de maquettes modernes et ergonomiques pour vos projets web.
             Un design intuitif et esthétique pour offrir une expérience utilisateur optimale.
           </p>
@@ -210,12 +303,14 @@ const onSubmit = async () => {
 
 
   <!-- PORTFOLIO -->
-  <section id="portfolio" class="bg-bg2">
-    <div class="container">
-      <h2 class="text-4xl font-bold text-center mb-10">Latest <span class="text-main">Project</span></h2>
-      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <div class="relative rounded-2xl overflow-hidden shadow sr-bottom" v-for="n in 6" :key="n">
+  <section id="portfolio" class="bg-bg2 py-12 sm:py-16">
+    <div class="container mx-auto max-w-7xl px-4 sm:px-6">
+      <h2 class="text-3xl sm:text-4xl font-bold text-center mb-8 sm:mb-10">Latest <span class="text-main">Project</span></h2>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div class="relative rounded-2xl overflow-hidden shadow sr-bottom aspect-[4/3]" v-for="n in 6" :key="n">
           <img :src="`/images/portfolio${n}.jpg`" class="w-full h-full object-cover transition duration-300 hover:scale-110" />
+
           <div class="absolute inset-0 bg-gradient-to-t from-main/90 to-black/10 opacity-0 hover:opacity-100 transition flex flex-col items-center justify-center text-center p-4">
             <h4 class="text-2xl font-semibold">Web Design</h4>
             <p class="mt-4 text-sm">Lorem ipsum dolor sit amet…</p>
@@ -229,13 +324,14 @@ const onSubmit = async () => {
   </section>
 
   <!-- CONTACT -->
-  <section id="contact" class="py-16">
-    <div class="container">
-      <h2 class="text-4xl font-bold text-center mb-10">
+  <section id="contact" class="py-12 sm:py-16">
+    <div class="container mx-auto max-w-7xl px-4 sm:px-6">
+      <h2 class="text-3xl sm:text-4xl font-bold text-center mb-8 sm:mb-10">
         Contact <span class="text-main">Nous</span>
       </h2>
 
-      <div class="grid lg:grid-cols-2 gap-8">
+
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
         <!-- =================== GAUCHE : Coordonnées =================== -->
         <div class="space-y-8">
           <h3 class="text-2xl font-semibold">Nos Coordonnées</h3>
@@ -247,7 +343,7 @@ const onSubmit = async () => {
             </div>
             <div>
               <p class="font-semibold">Email</p>
-              <p class="text-white/80">devgroupentreprise@gmail.com</p>
+              <p class="text-text opacity-80">devgroupentreprise@gmail.com</p>
               <a href="mailto:devgroupentreprise@gmail.com" class="text-main text-sm">
                 Envoyez‑nous un email
               </a>
@@ -261,7 +357,7 @@ const onSubmit = async () => {
             </div>
             <div>
               <p class="font-semibold">Téléphone</p>
-              <p class="text-white/80">+241 074 60 43 27</p>
+              <p class="text-text opacity-80">+241 074 60 43 27</p>
               <a href="tel:+241074604327" class="text-main text-sm">
                 Appelez‑nous
               </a>
@@ -275,7 +371,7 @@ const onSubmit = async () => {
             </div>
             <div>
               <p class="font-semibold">Adresse</p>
-              <p class="text-white/80">Avenue Denis RAPONTCHOMBO</p>
+              <p class="text-text opacity-80">Avenue Denis RAPONTCHOMBO</p>
               <a
                 class="text-main text-sm"
                 href="https://www.google.com/maps/search/?api=1&query=Avenue%20Denis%20RAPONTCHOMBO"
@@ -290,8 +386,8 @@ const onSubmit = async () => {
 
         <!-- =================== DROITE : Formulaire =================== -->
         <!-- =================== DROITE : Formulaire =================== -->
-        <div class="rounded-2xl border border-white/10 p-6">
-          <h3 class="text-xl font-semibold mb-4">Envoyez‑nous un message</h3>
+        <div class="rounded-2xl border border-border p-6 bg-bg2 sm:p-6">
+          <h3 class="text-lg sm:text-xl font-semibold mb-4">Envoyez-nous un message</h3>
 
           <!-- Succès -->
           <div
@@ -333,7 +429,7 @@ const onSubmit = async () => {
                 v-model.trim="form.message"
                 rows="6"
                 :disabled="sending"
-                class="w-full rounded-lg bg-bg2 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-main"
+                class="w-full rounded-lg bg-bg2 px-4 py-3 border border-border focus:outline-none focus:ring-2 focus:ring-main"
                 placeholder="Comment pouvons‑nous vous aider ?"
               ></textarea>
             </div>
