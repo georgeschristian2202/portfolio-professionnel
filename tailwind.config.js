@@ -1,5 +1,6 @@
 export default {
   content: ["./index.html","./src/**/*.{vue,js,ts}"],
+  darkMode: 'class',
   theme: {
     container: {
       center: true,
@@ -9,13 +10,17 @@ export default {
         md: '768px',
         lg: '1024px',
         xl: '1280px',
-        '2xl': '1280px' // verrouille à 1280 pour avoir le même rendu que ta 1ère image
+        '2xl': '1280px'
       }
     },
-    darkMode: 'class',
-
     extend: {
-      colors:{ bg:"#1f242d", bg2:"#323946", text:"#ffffff", main:"#00eeff" }
+      colors: {
+        bg: 'var(--bg)',
+        bg2: 'var(--bg2)',
+        text: 'var(--text)',
+        border: 'var(--border)',
+        main: 'var(--main)'
+      }
     }
   },
   plugins: [],
