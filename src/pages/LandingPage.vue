@@ -4,12 +4,18 @@ import { onMounted } from 'vue'
 import Typed from 'typed.js'
 import ScrollReveal from 'scrollreveal'
 import { useRouter } from 'vue-router'
+import emailjs from '@emailjs/browser'
 
 const router = useRouter()
 
 function goToCVPage() {
   router.push('/cv') // le chemin vers ta page CV
 }
+
+// Configuration EmailJS
+const EMAILJS_SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID || 'service_xhno7uf'
+const EMAILJS_TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID || 'template_rq4fagd'
+const EMAILJS_PUBLIC_KEY = import.meta.env.VITE_EMAILJS_PUBLIC_KEY || 'vMLIMZTnKhBXZA88u'
 
 onMounted(() => {
   new Typed('.typed', {
@@ -26,70 +32,72 @@ onMounted(() => {
   sr.reveal('.sr-right', { origin: 'right' })
 })
 
-const form = ref({ name: '', email: '', message: '', honey: '' })
+const form = ref({ name: '', email: '', service: '', message: '', honey: '' })
 const sending = ref(false)
 const success = ref(false)
 const errorMsg = ref('')
+
+const services = [
+  { value: '', label: 'Sélectionnez un service (optionnel)' },
+  { value: 'site-vitrine', label: 'Sites Vitrine' },
+  { value: 'app-web', label: 'Applications Web sur Mesure' },
+  { value: 'ui-ux', label: 'UI/UX Design & Maquettage' },
+  { value: 'formation-office', label: 'Formation Pack Office' },
+  { value: 'installation-office', label: 'Installation Pack Office' },
+  { value: 'logo-carte', label: 'Conception de Logos & Cartes de Visite' },
+  { value: 'autre', label: 'Autre / Message général' }
+]
 
 const emailOk = (v) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v || '')
 
 const onSubmit = async () => {
   errorMsg.value = ''
+
+  // Protection anti-spam (honeypot)
   if (form.value.honey) return
+
+  // Validation des champs requis
   if (!form.value.name || !form.value.email || !form.value.message) {
-    errorMsg.value = 'Veuillez remplir tous les champs.'
+    errorMsg.value = 'Veuillez remplir tous les champs obligatoires.'
     return
   }
+
+  // Validation format email
   if (!emailOk(form.value.email)) {
-    errorMsg.value = "L'email saisi n'est pas valide."
+    errorMsg.value = "Le format de l'email n'est pas valide."
     return
   }
 
-  // ✅ Vérif serveur (MX + jetables)
-  try {
-    const vr = await fetch(`/api/validate-email?email=${encodeURIComponent(form.value.email)}`)
-    const vd = await vr.json()
-    if (!vd.ok) {
-      const r = vd.reason || 'invalid_email'
-      const msg =
-        r === 'disposable_domain'
-          ? 'Adresse jetable non acceptée.'
-          : r === 'no_mx'
-            ? "Le domaine n'accepte pas d’emails (MX manquant)."
-            : r === 'bad_syntax'
-              ? 'Format d’email invalide.'
-              : 'Adresse e-mail invalide.'
-      errorMsg.value = msg
-      return
-    }
-  } catch {
-    // En cas d’erreur réseau DNS, on peut laisser passer ou bloquer :
-    errorMsg.value = "Impossible de vérifier l'email pour le moment. Réessayez."
-    return
-  }
-
-  // ✉️ Envoi si tout est OK
+  // ✉️ Envoi via EmailJS
   sending.value = true
   try {
-    const r = await fetch('/api/send-email', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        name: form.value.name,
-        email: form.value.email,
-        message: form.value.message,
-        subject: 'Contact Portfolio',
-      }),
-    })
-    if (!r.ok) throw new Error(await r.text())
+    const selectedService = services.find(s => s.value === form.value.service)
+    const serviceLabel = selectedService && selectedService.value ? selectedService.label : 'Message général'
+
+    // Paramètres pour le template EmailJS
+    const templateParams = {
+      from_name: form.value.name,
+      from_email: form.value.email,
+      service: serviceLabel,
+      message: form.value.message,
+      to_name: 'Georges RAPONTCHOMBO',
+    }
+
+    await emailjs.send(
+      EMAILJS_SERVICE_ID,
+      EMAILJS_TEMPLATE_ID,
+      templateParams,
+      EMAILJS_PUBLIC_KEY
+    )
+
     success.value = true
-    form.value = { name: '', email: '', message: '', honey: '' }
+    form.value = { name: '', email: '', service: '', message: '', honey: '' }
     setTimeout(() => {
       success.value = false
     }, 5000)
   } catch (e) {
-    console.error(e)
-    errorMsg.value = "L'envoi a échoué. Réessayez plus tard."
+    console.error('Erreur EmailJS:', e)
+    errorMsg.value = "L'envoi a échoué. Veuillez réessayer plus tard ou nous contacter directement."
   } finally {
     sending.value = false
   }
@@ -497,13 +505,36 @@ const onSubmit = async () => {
             </div>
 
             <div>
+              <label class="block text-xs sm:text-sm mb-1">Service concerné</label>
+              <select
+                v-model="form.service"
+                :disabled="sending"
+                class="w-full rounded-lg bg-bg border border-border px-3 sm:px-4 py-2.5 sm:py-3 text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-main cursor-pointer"
+              >
+                <option v-for="service in services" :key="service.value" :value="service.value">
+                  {{ service.label }}
+                </option>
+              </select>
+            </div>
+
+            <!-- Honeypot anti-spam (caché) -->
+            <div class="hidden" aria-hidden="true">
+              <input
+                type="text"
+                v-model="form.honey"
+                tabindex="-1"
+                autocomplete="off"
+              />
+            </div>
+
+            <div>
               <label class="block text-xs sm:text-sm mb-1">Message</label>
               <textarea
                 v-model.trim="form.message"
                 rows="5"
                 :disabled="sending"
                 class="w-full rounded-lg bg-bg border border-border px-3 sm:px-4 py-2.5 sm:py-3 text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-main resize-none"
-                placeholder="Comment pouvons‑nous vous aider ?"
+                placeholder="Décrivez votre projet ou votre demande..."
               ></textarea>
             </div>
 
