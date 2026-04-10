@@ -45,7 +45,7 @@ const services = [
   { value: 'formation-office', label: 'Formation Pack Office' },
   { value: 'installation-office', label: 'Installation Pack Office' },
   { value: 'logo-carte', label: 'Conception de Logos & Cartes de Visite' },
-  { value: 'autre', label: 'Autre / Message général' }
+  { value: 'autre', label: 'Autre / Message général' },
 ]
 
 const emailOk = (v) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v || '')
@@ -71,8 +71,9 @@ const onSubmit = async () => {
   // ✉️ Envoi via EmailJS
   sending.value = true
   try {
-    const selectedService = services.find(s => s.value === form.value.service)
-    const serviceLabel = selectedService && selectedService.value ? selectedService.label : 'Message général'
+    const selectedService = services.find((s) => s.value === form.value.service)
+    const serviceLabel =
+      selectedService && selectedService.value ? selectedService.label : 'Message général'
 
     // Paramètres pour le template EmailJS
     const templateParams = {
@@ -83,12 +84,7 @@ const onSubmit = async () => {
       to_name: 'Georges RAPONTCHOMBO',
     }
 
-    await emailjs.send(
-      EMAILJS_SERVICE_ID,
-      EMAILJS_TEMPLATE_ID,
-      templateParams,
-      EMAILJS_PUBLIC_KEY
-    )
+    await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, templateParams, EMAILJS_PUBLIC_KEY)
 
     success.value = true
     form.value = { name: '', email: '', service: '', message: '', honey: '' }
@@ -253,7 +249,11 @@ const onSubmit = async () => {
     >
       <!-- Photo avec overlay dégradé -->
       <div class="relative max-w-sm sm:max-w-md mx-auto">
-        <img src="/images/image_1.png" alt="Christian Rapontchombo" class="w-full rounded-lg shadow-lg" />
+        <img
+          src="/images/image_1.png"
+          alt="Christian Rapontchombo"
+          class="w-full rounded-lg shadow-lg"
+        />
         <div
           class="absolute inset-x-0 bottom-0 h-20 rounded-b-lg bg-gradient-to-t from-black/70 to-transparent"
         ></div>
@@ -267,7 +267,9 @@ const onSubmit = async () => {
         <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold mb-4">
           À propos de <span class="text-main">Moi</span>
         </h2>
-        <h3 class="text-main text-base sm:text-lg md:text-xl font-medium mb-4">Développeur Fullstack</h3>
+        <h3 class="text-main text-base sm:text-lg md:text-xl font-medium mb-4">
+          Développeur Fullstack
+        </h3>
 
         <p
           class="mb-6 text-sm sm:text-base md:text-lg leading-relaxed text-text opacity-80 max-w-prose mx-auto lg:mx-0 text-justify hyphens-auto"
@@ -305,7 +307,9 @@ const onSubmit = async () => {
         >
           <i class="bx bx-code-alt text-main text-4xl sm:text-5xl md:text-6xl"></i>
           <h3 class="mt-3 sm:mt-4 text-lg sm:text-xl md:text-2xl font-semibold">Sites Vitrine</h3>
-          <p class="mt-2 sm:mt-3 text-text opacity-80 text-xs sm:text-sm md:text-base text-justify hyphens-auto leading-relaxed">
+          <p
+            class="mt-2 sm:mt-3 text-text opacity-80 text-xs sm:text-sm md:text-base text-justify hyphens-auto leading-relaxed"
+          >
             Conception de sites web modernes, responsives et optimisés pour mettre en valeur votre
             activité. Idéal pour présenter vos services, votre entreprise ou vos produits de manière
             professionnelle.
@@ -317,8 +321,12 @@ const onSubmit = async () => {
           class="text-center rounded-2xl border-2 sm:border-4 border-bg bg-bg2 p-5 sm:p-6 md:p-8 transition hover:scale-[1.02] hover:border-main"
         >
           <i class="bx bx-devices text-main text-4xl sm:text-5xl md:text-6xl"></i>
-          <h3 class="mt-3 sm:mt-4 text-lg sm:text-xl md:text-2xl font-semibold">Applications Web sur Mesure</h3>
-          <p class="mt-2 sm:mt-3 text-text opacity-80 text-xs sm:text-sm md:text-base text-justify hyphens-auto leading-relaxed">
+          <h3 class="mt-3 sm:mt-4 text-lg sm:text-xl md:text-2xl font-semibold">
+            Applications Web sur Mesure
+          </h3>
+          <p
+            class="mt-2 sm:mt-3 text-text opacity-80 text-xs sm:text-sm md:text-base text-justify hyphens-auto leading-relaxed"
+          >
             Développement d'applications web interactives et performantes adaptées à vos besoins
             spécifiques. Solutions personnalisées avec des fonctionnalités avancées pour booster
             votre productivité.
@@ -330,8 +338,12 @@ const onSubmit = async () => {
           class="text-center rounded-2xl border-2 sm:border-4 border-bg bg-bg2 p-5 sm:p-6 md:p-8 transition hover:scale-[1.02] hover:border-main"
         >
           <i class="bx bxs-paint text-main text-4xl sm:text-5xl md:text-6xl"></i>
-          <h3 class="mt-3 sm:mt-4 text-lg sm:text-xl md:text-2xl font-semibold">UI/UX Design & Maquettage</h3>
-          <p class="mt-2 sm:mt-3 text-text opacity-80 text-xs sm:text-sm md:text-base text-justify hyphens-auto leading-relaxed">
+          <h3 class="mt-3 sm:mt-4 text-lg sm:text-xl md:text-2xl font-semibold">
+            UI/UX Design & Maquettage
+          </h3>
+          <p
+            class="mt-2 sm:mt-3 text-text opacity-80 text-xs sm:text-sm md:text-base text-justify hyphens-auto leading-relaxed"
+          >
             Création de maquettes modernes et ergonomiques pour vos projets web. Un design intuitif
             et esthétique pour offrir une expérience utilisateur optimale.
           </p>
@@ -342,8 +354,12 @@ const onSubmit = async () => {
           class="text-center rounded-2xl border-2 sm:border-4 border-bg bg-bg2 p-5 sm:p-6 md:p-8 transition hover:scale-[1.02] hover:border-main"
         >
           <i class="bx bxs-file-doc text-main text-4xl sm:text-5xl md:text-6xl"></i>
-          <h3 class="mt-3 sm:mt-4 text-lg sm:text-xl md:text-2xl font-semibold">Formation Pack Office</h3>
-          <p class="mt-2 sm:mt-3 text-text opacity-80 text-xs sm:text-sm md:text-base text-justify hyphens-auto leading-relaxed">
+          <h3 class="mt-3 sm:mt-4 text-lg sm:text-xl md:text-2xl font-semibold">
+            Formation Pack Office
+          </h3>
+          <p
+            class="mt-2 sm:mt-3 text-text opacity-80 text-xs sm:text-sm md:text-base text-justify hyphens-auto leading-relaxed"
+          >
             Maîtrisez les outils essentiels de Microsoft Office : Word pour la rédaction
             professionnelle, Excel pour l'analyse de données et PowerPoint pour des présentations
             percutantes. Formation adaptée à tous les niveaux.
@@ -355,8 +371,12 @@ const onSubmit = async () => {
           class="text-center rounded-2xl border-2 sm:border-4 border-bg bg-bg2 p-5 sm:p-6 md:p-8 transition hover:scale-[1.02] hover:border-main"
         >
           <i class="bx bx-download text-main text-4xl sm:text-5xl md:text-6xl"></i>
-          <h3 class="mt-3 sm:mt-4 text-lg sm:text-xl md:text-2xl font-semibold">Installation Pack Office</h3>
-          <p class="mt-2 sm:mt-3 text-text opacity-80 text-xs sm:text-sm md:text-base text-justify hyphens-auto leading-relaxed">
+          <h3 class="mt-3 sm:mt-4 text-lg sm:text-xl md:text-2xl font-semibold">
+            Installation Pack Office
+          </h3>
+          <p
+            class="mt-2 sm:mt-3 text-text opacity-80 text-xs sm:text-sm md:text-base text-justify hyphens-auto leading-relaxed"
+          >
             Installation complète et configuration de Microsoft Office sur votre ordinateur. Service
             rapide et professionnel incluant l'activation, la mise à jour et la personnalisation
             selon vos besoins.
@@ -368,10 +388,15 @@ const onSubmit = async () => {
           class="text-center rounded-2xl border-2 sm:border-4 border-bg bg-bg2 p-5 sm:p-6 md:p-8 transition hover:scale-[1.02] hover:border-main"
         >
           <i class="bx bx-palette text-main text-4xl sm:text-5xl md:text-6xl"></i>
-          <h3 class="mt-3 sm:mt-4 text-lg sm:text-xl md:text-2xl font-semibold">Conception de Logos & Cartes de Visite</h3>
-          <p class="mt-2 sm:mt-3 text-text opacity-80 text-xs sm:text-sm md:text-base text-justify hyphens-auto leading-relaxed">
+          <h3 class="mt-3 sm:mt-4 text-lg sm:text-xl md:text-2xl font-semibold">
+            Conception de Logos & Cartes de Visite
+          </h3>
+          <p
+            class="mt-2 sm:mt-3 text-text opacity-80 text-xs sm:text-sm md:text-base text-justify hyphens-auto leading-relaxed"
+          >
             Création d'identités visuelles uniques et professionnelles. Des logos mémorables et des
-            cartes de visite impactantes qui reflètent votre image de marque et captivent votre audience.
+            cartes de visite impactantes qui reflètent votre image de marque et captivent votre
+            audience.
           </p>
         </article>
       </div>
@@ -386,24 +411,86 @@ const onSubmit = async () => {
       </h2>
 
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
+        <!-- Projet 1: SING Fusion -->
         <div
-          class="relative rounded-2xl overflow-hidden shadow sr-bottom aspect-[4/3]"
-          v-for="n in 6"
-          :key="n"
+          class="relative rounded-2xl overflow-hidden shadow sr-bottom aspect-[4/3] group cursor-pointer"
         >
           <img
-            :src="`/images/portfolio${n}.jpg`"
-            class="w-full h-full object-cover transition duration-300 hover:scale-110"
+            src="/images/sing-fusion.png"
+            alt="SING Fusion"
+            class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
           />
-
           <div
-            class="absolute inset-0 bg-gradient-to-t from-main/90 to-black/10 opacity-0 hover:opacity-100 transition flex flex-col items-center justify-center text-center p-3 sm:p-4"
+            class="absolute inset-0 bg-gradient-to-t from-black/95 via-black/70 to-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col items-center justify-center text-center p-3 sm:p-4 text-white"
           >
-            <h4 class="text-lg sm:text-xl md:text-2xl font-semibold">Web Design</h4>
-            <p class="mt-2 sm:mt-4 text-xs sm:text-sm">Lorem ipsum dolor sit amet…</p>
+            <h4 class="text-lg sm:text-xl md:text-2xl font-semibold mb-2">SING Fusion</h4>
+            <p class="mt-2 sm:mt-4 text-xs sm:text-sm leading-relaxed">
+              Plateforme interne de digitalisation du processus d'intégration des nouveaux
+              collaborateurs avec modules interactifs et chatbot.
+            </p>
             <a
-              href="#"
-              class="mt-3 sm:mt-4 inline-flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-white text-bg2"
+              href="https://sing-fusion.pivot40.tech"
+              target="_blank"
+              rel="noopener"
+              class="mt-3 sm:mt-4 inline-flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-main text-white hover:bg-white hover:text-main transition-all duration-300 transform hover:scale-110"
+            >
+              <i class="bx bx-link-external text-xl sm:text-2xl"></i>
+            </a>
+          </div>
+        </div>
+
+        <!-- Projet 2: Guichet Numérique FPBG -->
+        <div
+          class="relative rounded-2xl overflow-hidden shadow sr-bottom aspect-[4/3] group cursor-pointer"
+        >
+          <img
+            src="/images/FPBG.png"
+            alt="Guichet Numérique FPBG"
+            class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+          />
+          <div
+            class="absolute inset-0 bg-gradient-to-t from-black/95 via-black/70 to-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col items-center justify-center text-center p-3 sm:p-4 text-white"
+          >
+            <h4 class="text-lg sm:text-xl md:text-2xl font-semibold mb-2">
+              Guichet Numérique FPBG
+            </h4>
+            <p class="mt-2 sm:mt-4 text-xs sm:text-sm leading-relaxed">
+              Plateforme de guichet numérique des appels à projet permettant aux porteurs de projet
+              de soumettre leurs projets.
+            </p>
+            <a
+              href="https://guichetnumerique.fpbg.ga"
+              target="_blank"
+              rel="noopener"
+              class="mt-3 sm:mt-4 inline-flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-main text-white hover:bg-white hover:text-main transition-all duration-300 transform hover:scale-110"
+            >
+              <i class="bx bx-link-external text-xl sm:text-2xl"></i>
+            </a>
+          </div>
+        </div>
+
+        <!-- Projet 3: DevGroup -->
+        <div
+          class="relative rounded-2xl overflow-hidden shadow sr-bottom aspect-[4/3] group cursor-pointer"
+        >
+          <img
+            src="/images/DevGroup.png"
+            alt="DevGroup"
+            class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+          />
+          <div
+            class="absolute inset-0 bg-gradient-to-t from-black/95 via-black/70 to-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col items-center justify-center text-center p-3 sm:p-4 text-white"
+          >
+            <h4 class="text-lg sm:text-xl md:text-2xl font-semibold mb-2">DevGroup Africa</h4>
+            <p class="mt-2 sm:mt-4 text-xs sm:text-sm leading-relaxed">
+              Agence de développement digital proposant des solutions numériques sur mesure :
+              développement web, e-commerce, applications mobiles et intelligence économique.
+            </p>
+            <a
+              href="https://devgroup.ga"
+              target="_blank"
+              rel="noopener"
+              class="mt-3 sm:mt-4 inline-flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-main text-white hover:bg-white hover:text-main transition-all duration-300 transform hover:scale-110"
             >
               <i class="bx bx-link-external text-xl sm:text-2xl"></i>
             </a>
@@ -416,9 +503,7 @@ const onSubmit = async () => {
   <!-- CONTACT -->
   <section id="contact" class="py-16 sm:py-20 md:py-24">
     <div class="container mx-auto max-w-7xl px-4 sm:px-6">
-      <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold text-center mb-10 sm:mb-12">
-        Contact <span class="text-main">Nous</span>
-      </h2>
+      <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold text-center mb-10 sm:mb-12">Contact</h2>
 
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
         <!-- =================== GAUCHE : Coordonnées =================== -->
@@ -427,13 +512,20 @@ const onSubmit = async () => {
 
           <!-- Email -->
           <div class="flex items-start gap-3 sm:gap-4">
-            <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-white/5 flex items-center justify-center flex-shrink-0">
+            <div
+              class="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-white/5 flex items-center justify-center flex-shrink-0"
+            >
               <i class="bx bx-envelope text-xl sm:text-2xl text-main"></i>
             </div>
             <div class="min-w-0">
               <p class="font-semibold text-sm sm:text-base">Email</p>
-              <p class="text-text opacity-80 text-xs sm:text-sm break-words">georges.rapontchombo@sing.ga</p>
-              <a href="mailto:georges.rapontchombo@sing.ga" class="text-main text-xs sm:text-sm hover:underline">
+              <p class="text-text opacity-80 text-xs sm:text-sm break-words">
+                georges.rapontchombo@sing.ga
+              </p>
+              <a
+                href="mailto:georges.rapontchombo@sing.ga"
+                class="text-main text-xs sm:text-sm hover:underline"
+              >
                 Envoyez‑nous un email
               </a>
             </div>
@@ -441,19 +533,25 @@ const onSubmit = async () => {
 
           <!-- Téléphone -->
           <div class="flex items-start gap-3 sm:gap-4">
-            <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-white/5 flex items-center justify-center flex-shrink-0">
+            <div
+              class="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-white/5 flex items-center justify-center flex-shrink-0"
+            >
               <i class="bx bx-phone text-xl sm:text-2xl text-main"></i>
             </div>
             <div>
               <p class="font-semibold text-sm sm:text-base">Téléphone</p>
               <p class="text-text opacity-80 text-xs sm:text-sm">074120408</p>
-              <a href="tel:074120408" class="text-main text-xs sm:text-sm hover:underline"> Appelez‑nous </a>
+              <a href="tel:074120408" class="text-main text-xs sm:text-sm hover:underline">
+                Appelez‑nous
+              </a>
             </div>
           </div>
 
           <!-- Adresse -->
           <div class="flex items-start gap-3 sm:gap-4">
-            <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-white/5 flex items-center justify-center flex-shrink-0">
+            <div
+              class="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-white/5 flex items-center justify-center flex-shrink-0"
+            >
               <i class="bx bx-map text-xl sm:text-2xl text-main"></i>
             </div>
             <div>
@@ -473,12 +571,16 @@ const onSubmit = async () => {
 
         <!-- =================== DROITE : Formulaire =================== -->
         <div class="rounded-2xl border border-border p-5 sm:p-6 bg-bg2 mt-6 lg:mt-0">
-          <h3 class="text-base sm:text-lg md:text-xl font-semibold mb-4">Envoyez-nous un message</h3>
+          <h3 class="text-base sm:text-lg md:text-xl font-semibold mb-4">
+            Envoyez-nous un message
+          </h3>
 
           <!-- Succès -->
           <div v-if="success" class="rounded-lg bg-green-900/60 text-green-200 px-3 sm:px-4 py-3">
             <p class="font-semibold text-sm sm:text-base">Message envoyé avec succès !</p>
-            <p class="text-xs sm:text-sm opacity-90">Nous vous répondrons dans les plus brefs délais.</p>
+            <p class="text-xs sm:text-sm opacity-90">
+              Nous vous répondrons dans les plus brefs délais.
+            </p>
           </div>
 
           <!-- Form -->
@@ -519,12 +621,7 @@ const onSubmit = async () => {
 
             <!-- Honeypot anti-spam (caché) -->
             <div class="hidden" aria-hidden="true">
-              <input
-                type="text"
-                v-model="form.honey"
-                tabindex="-1"
-                autocomplete="off"
-              />
+              <input type="text" v-model="form.honey" tabindex="-1" autocomplete="off" />
             </div>
 
             <div>

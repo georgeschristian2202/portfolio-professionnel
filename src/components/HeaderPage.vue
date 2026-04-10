@@ -1,5 +1,4 @@
 <script setup>
-
 defineOptions({ name: 'HeaderPage' })
 
 import { ref, onMounted, onBeforeUnmount, computed, nextTick } from 'vue'
@@ -7,15 +6,14 @@ import { useRoute, useRouter } from 'vue-router'
 import { useScrollSpy } from '@/composables/useScrollSpy'
 import ThemeToggle from '@/components/ThemeToggle.vue'
 
-
 // --- liens : sections (hash) vs route ---
 const links = [
-  { label: 'Home',     hash: '#home' },
-  { label: 'About',    hash: '#about' },
+  { label: 'Home', hash: '#home' },
+  { label: 'About', hash: '#about' },
   { label: 'Services', hash: '#services' },
-  { label: 'Cv',       route: '/cv' },                 // ← page dédiée
-  { label: 'Portfolio',hash: '#portfolio' },
-  { label: 'Contact',  hash: '#contact' },
+  { label: 'Cv', route: '/cv' }, // ← page dédiée
+  { label: 'Portfolio', hash: '#portfolio' },
+  { label: 'Contact', hash: '#contact' },
   // { label:'Ext', href:'https://...' , external:true }
 ]
 
@@ -23,25 +21,35 @@ const route = useRoute()
 const router = useRouter()
 
 // scroll‑spy seulement sur la landing
-const sectionIds = ['#home','#about','#services','#portfolio','#contact']
+const sectionIds = ['#home', '#about', '#services', '#portfolio', '#contact']
 const { active, scrollToId } = useScrollSpy(sectionIds)
 const isLanding = computed(() => route.name === 'home' || route.path === '/')
 
 const open = ref(false)
 const scrolled = ref(false)
-const onScroll = () => { scrolled.value = window.scrollY > 100 }
-onMounted(() => { window.addEventListener('scroll', onScroll); onScroll() })
+const onScroll = () => {
+  scrolled.value = window.scrollY > 100
+}
+onMounted(() => {
+  window.addEventListener('scroll', onScroll)
+  onScroll()
+})
 onBeforeUnmount(() => window.removeEventListener('scroll', onScroll))
 
 // navigation unifiée (route vs section)
 async function go(link) {
-  if (link.external) { window.location.href = link.href; return }
-  if (link.route) {            // /cv
+  if (link.external) {
+    window.location.href = link.href
+    return
+  }
+  if (link.route) {
+    // /cv
     open.value = false
     if (route.path !== link.route) await router.push(link.route)
     return
   }
-  if (link.hash) {             // #section
+  if (link.hash) {
+    // #section
     open.value = false
     if (isLanding.value) {
       scrollToId(link.hash)
@@ -57,21 +65,30 @@ async function go(link) {
 
 // classe active (route /cv ou section visible)
 function linkClass(link) {
-  if (link.route)  return route.path === link.route ? 'text-main' : ''
-  if (link.hash)   return isLanding.value && active.value === link.hash ? 'text-main' : ''
+  if (link.route) return route.path === link.route ? 'text-main' : ''
+  if (link.hash) return isLanding.value && active.value === link.hash ? 'text-main' : ''
   return ''
 }
 </script>
 
 <template>
-  <header :class="['fixed inset-x-0 top-0 z-50 border-b transition',
-                   scrolled ? 'bg-bg/90 backdrop-blur-md border-border/30' : 'bg-bg/80 border-transparent']">
+  <header
+    :class="[
+      'fixed inset-x-0 top-0 z-50 border-b transition',
+      scrolled ? 'bg-bg/90 backdrop-blur-md border-border/30' : 'bg-bg/80 border-transparent',
+    ]"
+  >
     <nav
-      class="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8
-         flex items-center justify-between py-3 sm:py-4"
+      class="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 flex items-center justify-between py-3 sm:py-4"
     >
-      <!-- (optionnel) logo/nom -->
-      <a class="text-xl sm:text-2xl font-semibold hover:text-main transition" href="/" @click.prevent="go({ hash:'#home' })">GR</a>
+      <!-- Logo -->
+      <a
+        class="flex items-center hover:opacity-80 transition"
+        href="/"
+        @click.prevent="go({ hash: '#home' })"
+      >
+        <img src="/apple-touch-icon.png" alt="Logo" class="h-10 w-10 sm:h-12 sm:w-12 rounded-lg" />
+      </a>
 
       <!-- Desktop links -->
       <ul class="hidden md:flex items-center gap-5 lg:gap-6">
@@ -81,7 +98,8 @@ function linkClass(link) {
             :to="l.route"
             class="hover:text-main transition text-sm lg:text-base font-medium"
             :class="linkClass(l)"
-          >{{ l.label }}</RouterLink>
+            >{{ l.label }}</RouterLink
+          >
 
           <a
             v-else-if="l.hash"
@@ -89,9 +107,14 @@ function linkClass(link) {
             class="hover:text-main transition text-sm lg:text-base font-medium"
             :class="linkClass(l)"
             @click.prevent="go(l)"
-          >{{ l.label }}</a>
+            >{{ l.label }}</a
+          >
 
-          <a v-else-if="l.external" :href="l.href" class="hover:text-main transition text-sm lg:text-base font-medium">
+          <a
+            v-else-if="l.external"
+            :href="l.href"
+            class="hover:text-main transition text-sm lg:text-base font-medium"
+          >
             {{ l.label }}
           </a>
         </li>
@@ -102,7 +125,7 @@ function linkClass(link) {
         <ThemeToggle />
         <button
           class="md:hidden p-2 hover:bg-bg2 rounded-lg transition"
-          @click="open=!open"
+          @click="open = !open"
           aria-label="Menu"
           :aria-expanded="open ? 'true' : 'false'"
         >
@@ -110,10 +133,6 @@ function linkClass(link) {
         </button>
       </div>
     </nav>
-
-
-
-
 
     <!-- Mobile -->
     <transition
@@ -132,8 +151,9 @@ function linkClass(link) {
               :to="l.route"
               class="block py-3 px-3 rounded-lg hover:bg-bg transition font-medium"
               :class="linkClass(l)"
-              @click="open=false"
-            >{{ l.label }}</RouterLink>
+              @click="open = false"
+              >{{ l.label }}</RouterLink
+            >
 
             <a
               v-else
@@ -141,7 +161,8 @@ function linkClass(link) {
               class="block py-3 px-3 rounded-lg hover:bg-bg transition font-medium"
               :class="linkClass(l)"
               @click.prevent="go(l)"
-            >{{ l.label }}</a>
+              >{{ l.label }}</a
+            >
           </li>
         </ul>
       </div>
